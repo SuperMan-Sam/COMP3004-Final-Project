@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>power.png</file>
+        <file>pause.png</file>
+        <file>play-button-arrowhead.png</file>
+        <file>stop-button.png</file>
+        <file>battery.png</file>
+        <file>connection_On.png</file>
+        <file>connection_Off.png</file>
+        <file>disconnection_On.png</file>
+        <file>disconnection_Off.png</file>
+        <file>dataProcessing_On.png</file>
+        <file>dataProcessing_Off.png</file>
+    </qresource>
+</RCC>

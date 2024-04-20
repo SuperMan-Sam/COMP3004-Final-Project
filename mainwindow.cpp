@@ -119,10 +119,6 @@ void MainWindow::onContactSignalStateChanged(int state)
     if(state == Qt::Unchecked){
         startSignal = false;
         contactSignal = false;
-        /*ui->label_Timer->setText("05:00");
-        process = 0;
-        updateProcessBar(process);
-        remainingSeconds = 300;*/
     }
 
     LED(contactSignal, processSignal);

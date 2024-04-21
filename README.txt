@@ -6,7 +6,6 @@ Zhixuan Cao 101100302
 
 2.Use cases:Zhongkai Yuan
 Design documentation:Zhongkai Yuan
-UML diagram:zhongkai yuan
 Implementation:Xinyu Xu & Zhixuan Cao
 Video:Xinyu Xu & Zhixuan Cao
 Requirements traceability matrix:zhongkai yuan

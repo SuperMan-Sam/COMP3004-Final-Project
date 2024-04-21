@@ -76,6 +76,11 @@ void MainWindow::updateTime() {
         LED(contactSignal, false);
         // Time is up, stop the timer
         timer->stop();
+        if(start_time != ""){
+            saveLog(start_time + "-" + getTime());
+            start_time.clear();
+            std::cout << start_time.toStdString();
+        }
     }
 }
 

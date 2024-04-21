@@ -25,8 +25,8 @@ PCWindow::PCWindow(QWidget *parent) : QWidget(parent)
     connect(printTimer, &QTimer::timeout, this, &PCWindow::printBaseline);
     printTimer->start(1000/16);
 
-
-    graphData();
+    handleStatusChanged();
+    connect(mw, &MainWindow::statusChanged, this, &PCWindow::handleStatusChanged);
 
 
 }
@@ -46,27 +46,32 @@ void PCWindow::printBaseline() {
     }
 }
 
-void PCWindow::graphData() {
+GraphData PCWindow::graphData() {
     int data = 58;
     QVector<double> x(data), y(data);
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> amp(1.0, -1.0);
-
+    std::uniform_real_distribution<double> amp(-1.0, 1.0);
+    float distValue = (xMax - 1)/(data - 1);    // distribution value
     for(int i = 0; i < data; ++i) {
-
-        float distX = data / xMax - 1;
-        x[i] = i * distX;
-
-        float distY = amp(gen);
-        y[i] = distY;
-
+        x[i] = i * distValue;
+        y[i] = amp(gen);
      }
+
+    GraphData dataLog;
+    dataLog.xData = x;
+    dataLog.yData = y;
+    qDebug() <<"X: " << dataLog.xData;
+    qDebug() <<"Y: " << dataLog.yData;
 
     customPlot->addGraph();
     customPlot->graph(0)->setData(x, y);
     customPlot->replot();
-   //currentRound++;
-   //std::cout << "Current round: " << mw->round<< std::endl;
+
+    return dataLog;
 }
 
+void PCWindow::handleStatusChanged() {
+    std::cout << "11111";
+    GraphData data = graphData();
+}

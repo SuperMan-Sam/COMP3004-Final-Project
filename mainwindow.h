@@ -10,6 +10,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QCoreApplication>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,6 +33,9 @@ public:
 
     QString start_time;
 
+signals:
+    bool statusChanged();
+
 private slots:
     void initializeTimer();
     void startTimer();
@@ -53,8 +57,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
-    int remainingSeconds;
-    int powerLeft = 100;
+    int remainingSeconds = 29;
+    int powerLeft = 70;
     int powerConsumed = 0;
     int process = 0;
     bool startSignal = false;

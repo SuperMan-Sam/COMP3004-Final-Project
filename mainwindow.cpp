@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "Sensor.h"
 #include "dialog.h"
+#include "pcwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -35,10 +36,10 @@ MainWindow::~MainWindow()
 
 // Initialize timer
 void MainWindow::initializeTimer() {
-    ui->label_Timer->setText("05:00");
+    ui->label_Timer->setText("00:29");
+    remainingSeconds = 29;
     process = 0;
     updateProcessBar(process);
-    remainingSeconds = 300;
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &MainWindow::updateTime);
 }
@@ -57,36 +58,46 @@ void MainWindow::startTimer() {
 }
 
 void MainWindow::updateTime() {
-    if (contactSignal == true && remainingSeconds >= 0) {
-        int minutes = remainingSeconds / 60;
-        int seconds = remainingSeconds % 60;
-        ui->label_Timer->setText(QString("%1:%2").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')));
+    if(contactSignal == true){
+        if (remainingSeconds >= 0) {
+            int minutes = remainingSeconds / 60;
+            int seconds = remainingSeconds % 60;
+            ui->label_Timer->setText(QString("%1:%2").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0')));
 
-        // update process bar
-        process = static_cast<int>(static_cast<float>((300 - remainingSeconds) / 300.0) * 100);
-        updateProcessBar(process);
+            // update process bar
+            process = static_cast<int>(static_cast<float>((29.0 - remainingSeconds) / 29.0) * 100);
+            updateProcessBar(process);
 
-        remainingSeconds--;
-        powerLeft--;
+            remainingSeconds--;
+            powerLeft--;
 
-        if (powerLeft < 1){
-            stopTimer();
-            ui->label_Battery->setVisible(true);
+            qDebug() <<"Remaining seconds: " << remainingSeconds;
+            qDebug() <<"PowerLeft: " << powerLeft;
+
+            showChargeLevel(powerLeft);
+        }else {
+            // Time is up, stop the timer
+            timer->stop();
+            qDebug() <<"NOW remaining seconds::::::::::::::::::::::::Remaining seconds: " << remainingSeconds;
+            PCWindow pcWindowObject;
+            pcWindowObject.handleStatusChanged();
+            qDebug() << "Signal emitted: statusChanged";
+            if(start_time != ""){
+                saveLog(start_time + "-" + getTime());
+                start_time.clear();
+                std::cout << start_time.toStdString();
+            }
         }
-    } else {
-        LED(contactSignal, false);
-        // Time is up, stop the timer
+    }else {
+        // disconnect
         timer->stop();
-        if(start_time != ""){
-            saveLog(start_time + "-" + getTime());
-            start_time.clear();
-            std::cout << start_time.toStdString();
-        }
+        LED(contactSignal, false);
+
     }
 }
 
 void MainWindow::pauseTimer() {
-    // update LED_Green state
+    // update LED_Green status
     LED(contactSignal, false);
     startSignal = false;
     timer->stop();
@@ -94,7 +105,7 @@ void MainWindow::pauseTimer() {
 }
 
 void MainWindow::stopTimer(){
-    // update LED_Green state
+    // update LED_Green status
     LED(contactSignal, false);
     startSignal = false;
     timer->stop();
@@ -103,6 +114,8 @@ void MainWindow::stopTimer(){
         saveLog(start_time + "-" + getTime());
         start_time.clear();
         std::cout << start_time.toStdString();
+        PCWindow pcWindowObject;
+        pcWindowObject.handleStatusChanged();
     }
 }
 
@@ -174,16 +187,10 @@ void MainWindow::LED(bool contactSignal, bool pSignal)
 
 // showChargeLevel
 void MainWindow::showChargeLevel(int powerLeft){
-    if(powerLeft >= 60 && powerLeft < 100){
-        // show green
+    if (powerLeft < 1){
+        stopTimer();
+        ui->label_Battery->setVisible(true);
     }
-    if(powerLeft >=20 && powerLeft < 60){
-        // show orange
-    }
-    if(powerLeft >=0 && powerLeft < 20){
-        // show red
-    }
-
 }
 
 // calculateBaseline
@@ -216,7 +223,7 @@ float MainWindow::offsetBaseline(float fd, int round) {
 
 // newSession
 void MainWindow::newSession(){
-    // start treatment
+    stopTimer();
 }
 
 // sessionLog
@@ -240,6 +247,7 @@ void MainWindow::sessionLog() {
 
 
 void MainWindow::saveLog(const QString& data){
+
     QString filePath = /*QCoreApplication::applicationDirPath() + */"/media/sf_Project/2/Team41_FinalProject/data.txt";
     QFile file(filePath); // File name to save to
     std::cout << filePath.toStdString() << std::endl;
@@ -252,4 +260,3 @@ void MainWindow::saveLog(const QString& data){
         std::cout << "Failed to save file:";
     }
 }
-

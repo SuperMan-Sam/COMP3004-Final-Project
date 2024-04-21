@@ -8,12 +8,20 @@
 #include "Sensor.h"
 #include "mainwindow.h"
 
+struct GraphData {
+    QVector<double> xData;
+    QVector<double> yData;
+};
+
 class PCWindow : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit PCWindow(QWidget *parent = nullptr);
+
+public slots:
+    void handleStatusChanged();
 
 private:
     QCustomPlot *customPlot;
@@ -27,8 +35,9 @@ private:
     WaveRanges waveData;
     AmplitudeRanges amplitudeData;
 
-    void graphData();
     void printBaseline();
+
+    GraphData graphData();
 
     int graphCounter;
     int printCounter;

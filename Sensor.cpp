@@ -41,4 +41,12 @@ AmplitudeRanges Sensor::getAmplitudeRanges() {
     return ranges;
 }
 
+float Sensor::getFdAmplitudeRanges(float fdAmplitude){
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> distFdAmplitude(8.0, 12.0);
+    fdAmplitude = distFdAmplitude(gen);
+    return fdAmplitude;
+}
+
 

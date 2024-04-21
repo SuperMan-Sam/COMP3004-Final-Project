@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    /*PCWindow pw;
-    pw.show();*/
+    PCWindow pw;
+    pw.show();
     return a.exec();
 }

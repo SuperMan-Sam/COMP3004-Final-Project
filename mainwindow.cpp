@@ -51,6 +51,7 @@ void MainWindow::startTimer() {
         LED(contactSignal, true);
         updateTime(); // Update the label_Timer immediately
         timer->start(1000);
+        start_time = getTime();
     }
 }
 
@@ -89,9 +90,14 @@ void MainWindow::pauseTimer() {
 void MainWindow::stopTimer(){
     // update LED_Green state
     LED(contactSignal, false);
-
+    startSignal = false;
     timer->stop();
     initializeTimer();
+    if(start_time != ""){
+        saveLog(start_time + "-" + getTime());
+        start_time.clear();
+        std::cout << start_time.toStdString();
+    }
 }
 
 void MainWindow:: updateProcessBar(int process) {
@@ -102,8 +108,12 @@ void MainWindow:: updateProcessBar(int process) {
 
 // showCurrentTime
 void MainWindow::showTime() {
+    ui->textBrowser->append(getTime());
+}
+
+QString MainWindow::getTime() {
     QDateTime currentTime = QDateTime::currentDateTime();
-    ui->textBrowser->append(currentTime.toString("yyyy-MM-dd HH:mm:ss"));
+    return currentTime.toString("yyyy-MM-dd HH:mm:ss");
 }
 
 // onContactSignalStateChanged
@@ -172,7 +182,7 @@ void MainWindow::showChargeLevel(int powerLeft){
 
 // calculateBaseline
 float MainWindow::calculateBaseline(float Alpha, float Beta, float Delta, float Theta, float Gamma, float A1, float A2, float A3, float A4, float A5) {
-    fd = (Alpha * std::pow(A1, 2) + Beta * std::pow(A2, 2) + Delta * std::pow(A3, 2) + Theta * std::pow(A4, 2) + Gamma * std::pow(A5, 2))/(std::pow(A1, 2) + std::pow(A2, 2) + std::pow(A3, 2));
+    fd = (Alpha * std::pow(A1, 2) + Beta * std::pow(A2, 2) + Delta * std::pow(A3, 2) + Theta * std::pow(A4, 2) + Gamma * std::pow(A5, 2))/(std::pow(A1, 2) + std::pow(A2, 2) + std::pow(A3, 2) + std::pow(A4, 2) + std::pow(A5, 2));
     return fd;
 }
 
@@ -204,8 +214,34 @@ void MainWindow::newSession(){
 }
 
 // sessionLog
-void MainWindow::sessionLog(){
-    // start treatment
-    QDateTime currentTime = QDateTime::currentDateTime();
-    ui->textBrowser->append("Current time: " + currentTime.toString("yyyy-MM-dd HH:mm:ss"));
+void MainWindow::sessionLog() {
+    QString filePath = /*QCoreApplication::applicationDirPath() + */"/media/sf_Project/2/Team41_FinalProject/data.txt";
+    QFile file(filePath); // File name to read from
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream in(&file);
+        QString fileContent = in.readAll(); // Read all content as a single QString
+        QStringList lines = fileContent.split("\n", Qt::SkipEmptyParts); // Split content into lines
+        for (const QString& line : lines) {
+            std::cout << line.toStdString() << std::endl; // Print each line
+        }
+        file.close();
+    } else {
+        std::cout << "Failed to open file for reading.";
+    }
 }
+
+
+void MainWindow::saveLog(const QString& data){
+    QString filePath = /*QCoreApplication::applicationDirPath() + */"/media/sf_Project/2/Team41_FinalProject/data.txt";
+    QFile file(filePath); // File name to save to
+    std::cout << filePath.toStdString() << std::endl;
+    if (file.open(QIODevice::Append | QIODevice::Text)) {
+        QTextStream stream(&file);
+        stream << data << "\n";
+        file.close();
+        std::cout << "Data appended to the file successfully.";
+    } else {
+        std::cout << "Failed to save file:";
+    }
+}
+

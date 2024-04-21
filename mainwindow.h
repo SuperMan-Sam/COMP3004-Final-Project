@@ -6,6 +6,10 @@
 #include <QLabel>
 #include <QToolButton>
 #include <QDateTime>
+#include <fstream>
+#include <QFile>
+#include <QTextStream>
+#include <QCoreApplication>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,6 +22,15 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    float calculateBaseline(float Alpha, float Beta, float Delta, float Theta, float Gamma, float A1, float A2, float A3, float A4, float A5);
+    float offsetBaseline(float fd, int round);
+
+    float fd;   // baseline
+
+    int round = 1;
+    int roundMax = 4;
+
+    QString start_time;
 
 private slots:
     void initializeTimer();
@@ -30,9 +43,9 @@ private slots:
     void onContactSignalStateChanged(int state);
     void LED(bool contactSignal, bool processSignal);
     void showChargeLevel(int powerLeft);
+    void saveLog(const QString& data);
+    QString getTime();
 
-    float calculateBaseline(float Alpha, float Beta, float Delta, float Theta, float Gamma, float A1, float A2, float A3, float A4, float A5);
-    float offsetBaseline(float fd, int round);
 
     void newSession();
     void sessionLog();
@@ -48,8 +61,7 @@ private:
     bool processSignal = false;
     bool contactSignal = false;
 
-    float fd;   // baseline
-    int round = 1;  // round
+
 
 };
 

@@ -10,25 +10,62 @@ PCWindow::PCWindow(QWidget *parent) : QWidget(parent)
     layout->addWidget(customPlot);
     setLayout(layout);
 
-    // Set up the plot data
-    QVector<double> xData, yData;
-    // Add your data points here
-    // Example:
-    xData << 1 << 2 << 3 << 4 << 5 << 6 << 7;
-    yData << 2 << 4 << 5 << 7 << 9 << 6 << 7;
+    customPlot->xAxis->setRange(xMin, xMax);
+    customPlot->yAxis->setRange(-1, 1);
 
-    // Create a graph and set its data
-    customPlot->addGraph();
-    customPlot->graph(0)->setData(xData, yData);
+    // Get data
+    mw = new MainWindow(this);
+    sensor = new Sensor(this);
 
-    // Set up the axes
-    customPlot->xAxis->setLabel("Time");
-    customPlot->yAxis->setLabel("Value");
+    waveData = sensor->getWaveRanges();
+    amplitudeData = sensor->getAmplitudeRanges();
 
-    // Set up the range of the axes (optional)
-    customPlot->xAxis->setRange(0, 6);
-    customPlot->yAxis->setRange(0, 10);
+    printTimer = new QTimer(this);
+    connect(printTimer, &QTimer::timeout, this, &PCWindow::printBaseline);
+    printTimer->start(1000/16);
 
-    // Replot the plot
-    customPlot->replot();
+
+    graphData();
+
+
 }
+
+void PCWindow::printBaseline() {
+    if (currentRound <= mw->roundMax && printCounter < 16) {
+        mw->fd = mw->calculateBaseline(waveData.Alpha, waveData.Beta, waveData.Delta, waveData.Theta, waveData.Gamma, amplitudeData.A1, amplitudeData.A2, amplitudeData.A3, amplitudeData.A4, amplitudeData.A5);
+        mw->fd = mw->offsetBaseline(mw->fd, currentRound);
+        std::cout << "Round " << currentRound << " Baseline: " << mw->fd << "Hz" << std::endl;
+        printCounter++;
+    } else if (printCounter >= 16) {
+        printCounter = 0;
+        currentRound++;
+        if (currentRound > mw->roundMax) {
+            printTimer->stop();
+        }
+    }
+}
+
+void PCWindow::graphData() {
+    int data = 58;
+    QVector<double> x(data), y(data);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> amp(1.0, -1.0);
+
+    for(int i = 0; i < data; ++i) {
+
+        float distX = data / xMax - 1;
+        x[i] = i * distX;
+
+        float distY = amp(gen);
+        y[i] = distY;
+
+     }
+
+    customPlot->addGraph();
+    customPlot->graph(0)->setData(x, y);
+    customPlot->replot();
+   //currentRound++;
+   //std::cout << "Current round: " << mw->round<< std::endl;
+}
+

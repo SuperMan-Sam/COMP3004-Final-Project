@@ -23,6 +23,9 @@ public:
     explicit Sensor(QObject *parent = nullptr);
     WaveRanges getWaveRanges();
     AmplitudeRanges getAmplitudeRanges();
+    float getFdAmplitudeRanges(float fdAmplitude);
+
+    float fdAmplitude;
 
 private:
 

@@ -13,3 +13,7 @@ Requirements traceability matrix:zhongkai yuan
 
 3.Organization of the submission:Three people upload it to to brightspace and share github link
 github:https://github.com/SuperMan-Sam/COMP3004-Final-Project
+
+
+Instructions for using the code:
+Drag all the files into QTcreator and click run

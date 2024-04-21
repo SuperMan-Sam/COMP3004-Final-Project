@@ -8,18 +8,14 @@
 #include "Sensor.h"
 #include "mainwindow.h"
 
-struct GraphData {
-    QVector<double> xData;
-    QVector<double> yData;
-};
-
 class PCWindow : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit PCWindow(QWidget *parent = nullptr);
-    void handleStatusChanged();
+    void setGraph(const QVector<double> &xData, const QVector<double> &yData);
+
 
 private:
     QCustomPlot *customPlot;

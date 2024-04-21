@@ -40,32 +40,9 @@ void PCWindow::printBaseline() {
     }
 }
 
-GraphData PCWindow::graphData() {
-    int data = 58;
-    QVector<double> x(data), y(data);
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_real_distribution<double> amp(-1.0, 1.0);
-    float distValue = (xMax - 1)/(data - 1);    // distribution value
-    for(int i = 0; i < data; ++i) {
-        x[i] = i * distValue;
-        y[i] = amp(gen);
-     }
-
-    GraphData dataLog;
-    dataLog.xData = x;
-    dataLog.yData = y;
-    qDebug() <<"X: " << dataLog.xData;
-    qDebug() <<"Y: " << dataLog.yData;
-
-    customPlot->addGraph();
-    customPlot->graph(0)->setData(x, y);
-    customPlot->replot();
-
-    return dataLog;
-}
-
-void PCWindow::handleStatusChanged() {
+void PCWindow::setGraph(const QVector<double> &xData, const QVector<double> &yData) {
     std::cout << "22222";
-    GraphData data = graphData();
+    customPlot->addGraph();
+    customPlot->graph(0)->setData(xData, yData);
+    customPlot->replot();
 }

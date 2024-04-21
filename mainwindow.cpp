@@ -79,8 +79,10 @@ void MainWindow::updateTime() {
             // Time is up, stop the timer
             timer->stop();
             qDebug() <<"NOW remaining seconds::::::::::::::::::::::::Remaining seconds: " << remainingSeconds;
-            PCWindow pcWindowObject;
-            pcWindowObject.handleStatusChanged();
+            PCWindow *pc = new PCWindow();
+            GraphData datas = graphData(remainingSeconds);
+            pc->setGraph(datas.xData, datas.yData);
+            pc->show();
             qDebug() << "Signal emitted: statusChanged";
             if(start_time != ""){
                 saveLog(start_time + "-" + getTime());
@@ -110,16 +112,14 @@ void MainWindow::stopTimer(){
     startSignal = false;
     timer->stop();
     initializeTimer();
-    PCWindow pcWindowObject;
-    pcWindowObject.handleStatusChanged();
-    std::cout << "1110001";
     if(start_time != ""){
         saveLog(start_time + "-" + getTime());
         start_time.clear();
         std::cout << start_time.toStdString();
-        PCWindow pcWindowObject;
-        pcWindowObject.handleStatusChanged();
-        std::cout << "111000";
+        PCWindow *pc = new PCWindow();
+        GraphData datas = graphData(remainingSeconds);
+        pc->setGraph(datas.xData, datas.yData);
+        pc->show();
     }
 }
 
@@ -270,4 +270,29 @@ void MainWindow::saveLog(const QString& data){
     } else {
         std::cout << "Failed to save file:";
     }
+}
+
+GraphData MainWindow::graphData(int remainingSeconds) {
+    int data = 58;
+    QVector<double> x(data), y(data);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> amp(-1.0, 1.0);
+    float distValue = (xMax - 1)/(data - 1);    // distribution value
+    for(int i = 0; i < data; ++i) {
+        x[i] = i * distValue;
+        y[i] = amp(gen);
+     }
+
+    GraphData dataLog;
+    dataLog.xData = x;
+    dataLog.yData = y;
+    qDebug() <<"X: " << dataLog.xData;
+    qDebug() <<"Y: " << dataLog.yData;
+
+    /*customPlot->addGraph();
+    customPlot->graph(0)->setData(x, y);
+    customPlot->replot();*/
+
+    return dataLog;
 }

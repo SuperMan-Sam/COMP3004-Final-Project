@@ -16,6 +16,11 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+struct GraphData {
+    QVector<double> xData;
+    QVector<double> yData;
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -33,9 +38,6 @@ public:
 
     QString start_time;
 
-signals:
-    bool statusChanged();
-
 private slots:
     void initializeTimer();
     void startTimer();
@@ -49,6 +51,8 @@ private slots:
     void showChargeLevel(int powerLeft);
     void saveLog(const QString& data);
     QString getTime();
+
+    GraphData graphData(int remainingSeconds);
 
 
     void newSession();
@@ -64,6 +68,12 @@ private:
     bool startSignal = false;
     bool processSignal = false;
     bool contactSignal = false;
+    // Define axies
+    float xMin = 0.0;
+    float xMax = 30.0;
+
+    float yMin = -1.0;
+    float yMax = 1.0;
 
 
 

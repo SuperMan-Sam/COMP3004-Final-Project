@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     w.show();
 
     PCWindow pw;
+    pw.resize(600, 200);
     pw.show();
     return a.exec();
 }

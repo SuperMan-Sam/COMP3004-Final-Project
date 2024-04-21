@@ -9,7 +9,6 @@ PCWindow::PCWindow(QWidget *parent) : QWidget(parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(customPlot);
     setLayout(layout);
-    customPlot->resize(600, 800);
 
     customPlot->xAxis->setRange(xMin, xMax);
     customPlot->yAxis->setRange(-1, 1);
@@ -24,11 +23,6 @@ PCWindow::PCWindow(QWidget *parent) : QWidget(parent)
     printTimer = new QTimer(this);
     connect(printTimer, &QTimer::timeout, this, &PCWindow::printBaseline);
     printTimer->start(1000/16);
-
-    handleStatusChanged();
-    connect(mw, &MainWindow::statusChanged, this, &PCWindow::handleStatusChanged);
-
-
 }
 
 void PCWindow::printBaseline() {
@@ -72,6 +66,6 @@ GraphData PCWindow::graphData() {
 }
 
 void PCWindow::handleStatusChanged() {
-    std::cout << "11111";
+    std::cout << "22222";
     GraphData data = graphData();
 }

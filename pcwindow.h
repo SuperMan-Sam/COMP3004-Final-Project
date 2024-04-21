@@ -19,8 +19,6 @@ class PCWindow : public QWidget
 
 public:
     explicit PCWindow(QWidget *parent = nullptr);
-
-public slots:
     void handleStatusChanged();
 
 private:

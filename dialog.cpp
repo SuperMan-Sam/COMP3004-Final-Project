@@ -1,6 +1,5 @@
 #include "dialog.h"
 #include "ui_dialog.h"
-#include "unistd.h"
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),

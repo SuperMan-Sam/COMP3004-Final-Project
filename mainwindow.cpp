@@ -110,12 +110,16 @@ void MainWindow::stopTimer(){
     startSignal = false;
     timer->stop();
     initializeTimer();
+    PCWindow pcWindowObject;
+    pcWindowObject.handleStatusChanged();
+    std::cout << "1110001";
     if(start_time != ""){
         saveLog(start_time + "-" + getTime());
         start_time.clear();
         std::cout << start_time.toStdString();
         PCWindow pcWindowObject;
         pcWindowObject.handleStatusChanged();
+        std::cout << "111000";
     }
 }
 
@@ -132,7 +136,7 @@ void MainWindow::showTime() {
 
 QString MainWindow::getTime() {
     QDateTime currentTime = QDateTime::currentDateTime();
-    return currentTime.toString("yyyy-MM-dd HH:mm:ss");
+    return currentTime.toString("yyyy-MM-dd-HH:mm:ss");
 }
 
 // onContactSignalStateChanged
@@ -228,7 +232,7 @@ void MainWindow::newSession(){
 
 // sessionLog
 void MainWindow::sessionLog() {
-    QString filePath = /*QCoreApplication::applicationDirPath() + */"/media/sf_Project/2/Team41_FinalProject/data.txt";
+    QString filePath = QCoreApplication::applicationDirPath() + "/data.txt";
     QFile file(filePath); // File name to read from
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream in(&file);
@@ -248,8 +252,15 @@ void MainWindow::sessionLog() {
 
 void MainWindow::saveLog(const QString& data){
 
-    QString filePath = /*QCoreApplication::applicationDirPath() + */"/media/sf_Project/2/Team41_FinalProject/data.txt";
+    QString filePath = QCoreApplication::applicationDirPath() + "/data.txt";
     QFile file(filePath); // File name to save to
+    if (!file.exists()) { // Check if file doesn't exist
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            std::cerr << "Failed to create file.";
+            return;
+        }
+        file.close();
+    }
     std::cout << filePath.toStdString() << std::endl;
     if (file.open(QIODevice::Append | QIODevice::Text)) {
         QTextStream stream(&file);

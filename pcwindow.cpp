@@ -9,6 +9,7 @@ PCWindow::PCWindow(QWidget *parent) : QWidget(parent)
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->addWidget(customPlot);
     setLayout(layout);
+    customPlot->resize(600, 800);
 
     customPlot->xAxis->setRange(xMin, xMax);
     customPlot->yAxis->setRange(-1, 1);
@@ -34,7 +35,7 @@ void PCWindow::printBaseline() {
     if (currentRound <= mw->roundMax && printCounter < 16) {
         mw->fd = mw->calculateBaseline(waveData.Alpha, waveData.Beta, waveData.Delta, waveData.Theta, waveData.Gamma, amplitudeData.A1, amplitudeData.A2, amplitudeData.A3, amplitudeData.A4, amplitudeData.A5);
         mw->fd = mw->offsetBaseline(mw->fd, currentRound);
-        std::cout << "Round " << currentRound << " Baseline: " << mw->fd << "Hz" << std::endl;
+        //std::cout << "Round " << currentRound << " Baseline: " << mw->fd << "Hz" << std::endl;
         printCounter++;
     } else if (printCounter >= 16) {
         printCounter = 0;

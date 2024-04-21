@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     Sensor.cpp \
+    dialog.cpp \
     main.cpp \
     mainwindow.cpp \
     pcwindow.cpp \
@@ -17,11 +18,13 @@ SOURCES += \
 
 HEADERS += \
     Sensor.h \
+    dialog.h \
     mainwindow.h \
     pcwindow.h \
     qcustomplot.h
 
 FORMS += \
+    dialog.ui \
     mainwindow.ui \
     pcwindow.ui
 

@@ -1,11 +1,14 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include "unistd.h"
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+
+    connect(ui->listWidget, &QListWidget::itemClicked, this, &Dialog::on_listWidget_itemClicked);
 }
 
 Dialog::~Dialog()
@@ -13,17 +16,13 @@ Dialog::~Dialog()
     delete ui;
 }
 
-void Dialog::outputData(const QString &data)
-{
-    ui->listWidget->clear(); // Clear existing items
-    QStringList lines = data.split("\n", Qt::SkipEmptyParts);
-    for(const QString &line : lines)
-    {
-        ui->listWidget->addItem(line);
-    }
-}
 void Dialog::on_listWidget_itemClicked(QListWidgetItem *item)
 {
-    std::cout << "1212";
+    // Handle item click here
+    //qDebug() << "Clicked on item" << item->text();
 }
 
+void Dialog::showLogs(const QString& data)
+{
+    ui->listWidget->addItem(data);
+}

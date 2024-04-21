@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "Sensor.h"
+#include "dialog.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -226,9 +227,11 @@ void MainWindow::sessionLog() {
         QTextStream in(&file);
         QString fileContent = in.readAll(); // Read all content as a single QString
         QStringList lines = fileContent.split("\n", Qt::SkipEmptyParts); // Split content into lines
+        Dialog dialogs;
         for (const QString& line : lines) {
-            std::cout << line.toStdString() << std::endl; // Print each line
+            dialogs.showLogs(line);
         }
+        dialogs.exec();
         file.close();
     } else {
         std::cout << "Failed to open file for reading.";

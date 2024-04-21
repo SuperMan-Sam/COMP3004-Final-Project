@@ -2,10 +2,10 @@
 #define DIALOG_H
 
 #include <QDialog>
-#include "mainwindow.h"
+#include <QListWidgetItem>
 
 namespace Ui {
-class Dialog;
+    class Dialog;
 }
 
 class Dialog : public QDialog
@@ -16,7 +16,7 @@ public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
 
-    void outputData(const QString &data);
+    void showLogs(const QString& data);
 
 private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);

@@ -92,12 +92,6 @@ void MainWindow::updateTime() {
             // Time is up, stop the timer
             timer->stop();
             showGraph();
-            qDebug() << "Signal emitted: statusChanged";
-            /*if(start_time != ""){
-                saveLog(start_time + "-" + getTime()+ "/" + graphDataToString(datas));
-                start_time.clear();
-                std::cout << start_time.toStdString()+ "-" +getTime().toStdString()+ "/" + graphDataToString(datas).toStdString();
-            }*/
         }
     }else {
         // disconnect
@@ -214,6 +208,7 @@ void MainWindow::sessionLog() {
         QString fileContent = in.readAll(); // Read all content as a single QString
         QStringList lines = fileContent.split("\n", Qt::SkipEmptyParts); // Split content into lines
         QSet<QString> uniqueTextBeforeSlash;
+        globalDialog->clearLogs();
         for (const QString& line : lines) {
             int index1 = line.indexOf("/");
             if (index1 != -1) { // "=" found in the line
@@ -372,6 +367,7 @@ void MainWindow::showBaseline(const QString data){
 
 void MainWindow::printBaseline() {
     if(contactSignal == false || startSignal == false){
+        printTimer->stop();
         return;
     }
     if (currentRound <= roundMax && printCounter < 16) {
@@ -381,13 +377,13 @@ void MainWindow::printBaseline() {
         QString baselineText = "Round " + QString::number(currentRound) + " Baseline: " + QString::number(fd) + "Hz";
         showBaseline(baselineText);
         printCounter++;
-    } else if (printCounter >= 16) {
+    }
+    if (printCounter >= 16) {
         printCounter = 0;
         currentRound++;
         if (currentRound > roundMax) {
             printTimer->stop();
             currentRound = 1;
-            qDebug() << "10";
         }
     }
 }

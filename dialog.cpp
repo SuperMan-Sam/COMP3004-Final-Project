@@ -36,3 +36,7 @@ void Dialog::showLogs(const QString& title, const QString& data)
 {
     ui->listWidget->addItem(title);
 }
+
+void Dialog::clearLogs(){
+    ui->listWidget->clear();
+}

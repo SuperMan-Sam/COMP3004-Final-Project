@@ -17,6 +17,7 @@ public:
     ~Dialog();
 
     void showLogs(const QString& title, const QString& data);
+    void clearLogs();
 
 private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);

@@ -2,7 +2,7 @@ TEAM41
 1.TEAM MEMBER:
 Zhongkai Yuan 101167954
 Xinyu Xu 101169673
-Zhixuan Cao 101100302
+Zhixuan Cao 101100302 (github:SuperMan-Sam)
 
 2.Use cases:Zhongkai Yuan
 Design documentation:Zhongkai Yuan

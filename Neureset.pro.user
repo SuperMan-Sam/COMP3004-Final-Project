@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 6.0.2, 2024-04-21T15:50:07. -->
+<!-- Written by QtCreator 6.0.2, 2024-04-21T17:46:08. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -236,13 +236,15 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/media/sf_Project/2/Team41_FinalProject/Neureset.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/media/sf_Project/2/Team41_FinalProject/Neureset.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Neureset2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/media/sf_Project/1/Neureset.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/media/sf_Project/1/Neureset.pro</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/student/build-Neureset-Desktop-Debug</value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

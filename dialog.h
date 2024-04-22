@@ -16,7 +16,7 @@ public:
     explicit Dialog(QWidget *parent = nullptr);
     ~Dialog();
 
-    void showLogs(const QString& data);
+    void showLogs(const QString& title, const QString& data);
 
 private slots:
     void on_listWidget_itemClicked(QListWidgetItem *item);

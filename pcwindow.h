@@ -7,6 +7,7 @@
 #include "qcustomplot.h"
 #include "Sensor.h"
 #include "mainwindow.h"
+#include "ui_pcwindow.h"
 
 class PCWindow : public QWidget
 {
@@ -14,22 +15,15 @@ class PCWindow : public QWidget
 
 public:
     explicit PCWindow(QWidget *parent = nullptr);
-    void setGraph(const QVector<double> &xData, const QVector<double> &yData);
+    void setGraph(int plot_id, const QVector<double> &xData, const QVector<double> &yData);
+    void updateGraph();
 
 
 private:
+    Ui::PCWindow *ui;
     QCustomPlot *customPlot;
-    QTimer *printTimer;
     QTimer *graphTimer;
 
-
-    MainWindow *mw;
-    Sensor *sensor;
-
-    WaveRanges waveData;
-    AmplitudeRanges amplitudeData;
-
-    void printBaseline();
 
     GraphData graphData();
 
@@ -37,12 +31,14 @@ private:
     int printCounter;
     int currentRound = 1;
 
+    int roundMax = 4;
+
     // Define axies
     float xMin = 0.0;
     float xMax = 30.0;
 
-    float yMin = -1.0;
-    float yMax = 1.0;
+    float yMin = -1.5;
+    float yMax = 1.5;
 
 };
 

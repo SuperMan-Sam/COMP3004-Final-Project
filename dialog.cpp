@@ -1,5 +1,7 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include "QDebug"
+#include "mainwindow.h"
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -18,10 +20,19 @@ Dialog::~Dialog()
 void Dialog::on_listWidget_itemClicked(QListWidgetItem *item)
 {
     // Handle item click here
-    //qDebug() << "Clicked on item" << item->text();
+    qDebug() << "Clicked on item" << item->text();
+    if (item) {
+        QString title = item->text();
+        MainWindow* mWindow = qobject_cast<MainWindow*>(parentWidget());
+        if (mWindow) {
+            mWindow->showLog(title); // Call showLog function of MainWindow
+        } else {
+            qDebug() << "mWindow is null!";
+        }
+    }
 }
 
-void Dialog::showLogs(const QString& data)
+void Dialog::showLogs(const QString& title, const QString& data)
 {
-    ui->listWidget->addItem(data);
+    ui->listWidget->addItem(title);
 }

@@ -23,4 +23,4 @@ and click "run" button in qtcreator
 method2:
 Drag all the files into QTcreator and click run
 
-files include:battery.png connection_Off.png connection_On.png data.txt dataProcessing_Off.png dataProcessing_On.png dialog.cpp dialog.cpp.NkvbPT dialog.h dialog.ui disconnection_Off.png disconnection_On.png images.qrc main.cpp mainwindow.cpp mainwindow.h mainwindow.ui Neureset.pro Neureset.pro.user pause.png pcwindow.cpp pcwindow.h pcwindow.ui play-button-arrowhead.png power.png qcustomplot.cpp qcustomplot.h Sensor.cpp Sensor.h stop-button.png
+files include:battery.png connection_Off.png connection_On.png dataProcessing_Off.png dataProcessing_On.png dialog.cpp dialog.cpp.NkvbPT dialog.h dialog.ui disconnection_Off.png disconnection_On.png images.qrc main.cpp mainwindow.cpp mainwindow.h mainwindow.ui Neureset.pro Neureset.pro.user pause.png pcwindow.cpp pcwindow.h pcwindow.ui play-button-arrowhead.png power.png qcustomplot.cpp qcustomplot.h Sensor.cpp Sensor.h stop-button.png
